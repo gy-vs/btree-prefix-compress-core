@@ -1,1 +1,41 @@
-export class BTree<V>{#entries:{key:string;value:V}[]=[];insert(key:string,value:V){const at=this.#entries.findIndex(item=>item.key>=key);this.#entries.splice(at<0?this.#entries.length:at,0,{key,value})}get(key:string){return this.#entries.find(item=>item.key===key)?.value}delete(key:string){const at=this.#entries.findIndex(item=>item.key===key);if(at>=0)this.#entries.splice(at,1)}range(start:string,end:string){return this.#entries.filter(item=>item.key>=start&&item.key<=end).map(item=>({...item}))}size(){return this.#entries.length}}
+// 公开 API
+export { BTree } from './legacy.js';
+
+export { PagedBTree } from './tree.js';
+export type { ValueCodec, PagedBTreeOptions } from './tree.js';
+
+export { MemoryPageStore } from './store.js';
+export type { PageStore } from './store.js';
+
+export {
+  encodeLeaf,
+  decodeLeaf,
+  searchLeaf,
+  leafEncodedSize,
+  leafEntryOffset,
+  LEAF_HEADER_SIZE,
+  LEAF_MAGIC,
+  DEFAULT_RESTART_INTERVAL,
+} from './leaf.js';
+export type { LeafEntry, ParsedLeaf } from './leaf.js';
+
+export {
+  encodeInternal,
+  parseInternal,
+  routeInternal,
+  internalEncodedSize,
+  INTERNAL_HEADER_SIZE,
+} from './internal.js';
+export type { InternalCell, ParsedInternal } from './internal.js';
+
+export {
+  bytesEqual,
+  bytesToText,
+  compareBytes,
+  concatBytes,
+  crc32,
+  crc32Chunks,
+  KeyTooLargeError,
+  PageCorruptError,
+  toBytes,
+} from './coding.js';
